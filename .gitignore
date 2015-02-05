@@ -1,6 +1,7 @@
-*.pyc
-requirements.txt
-lang_detect.pyc_dis
 *.bak
+*.pyc
+ShooterSubPyDownloader.v12.suo
 lang_detect.bat
+lang_detect.pyc_dis
+requirements.txt
 shootersuball.bat
