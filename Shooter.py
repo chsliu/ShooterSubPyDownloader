@@ -39,7 +39,7 @@ class Shooter(object):
     def start(self):
         try:
             print("=================================")
-            print "Processing: %s ..." % os.path.basename(self.__fileName)
+            print ("Processing: %s ..." % os.path.basename(self.__fileName))
             self.__videoHash = SVPlayerHash.ComputeFileHash(self.__fileName)
         except:
             print(">>File Access Error.")
@@ -53,7 +53,7 @@ class Shooter(object):
             rsp = urlopen(req)
             content = rsp.read().decode('utf-8', 'replace')
         except:
-            print ">>Connection Error"
+            print (">>Connection Error")
             return false
 
         jsonContent = ""
@@ -112,18 +112,18 @@ class Shooter(object):
                 if j["Ext"]=="ass":
 ##                    lang="chn"
                     lang="zh"
-                    print ">>Lang %s, because of .%s extension" % (lang,j["Ext"])
+                    print (">>Lang %s, because of .%s extension" % (lang,j["Ext"]))
                 elif j["Ext"]=="idx":
                     lang=""
-                    print ">>Lang none, because of .%s extension" % j["Ext"]
+                    print (">>Lang none, because of .%s extension" % j["Ext"])
                 elif j["Ext"]=="sub" and len(backF) > 1000000:
                     lang=""
-                    print ">>Lang none, because of .%s extension" % j["Ext"]
+                    print (">>Lang none, because of .%s extension" % j["Ext"])
                 else:
-                    print ">> Testing  %s.%s" % (os.path.splitext(os.path.basename(self.__fileName))[0],str(j["Ext"]))
+                    print (">> Testing  %s.%s" % (os.path.splitext(os.path.basename(self.__fileName))[0],str(j["Ext"])))
                     d=chardet.detect(backF[:300])
                     if d["encoding"] == None:
-                        print ">>Encoding not found"
+                        print (">>Encoding not found")
                         continue
                     c=d["encoding"].lower()
                     # if c in encoding_wanted:
@@ -133,12 +133,12 @@ class Shooter(object):
                     #     print "Skipping, because of encoding", c
                     #     continue
                     likelyKeep = ["big5","gb2312"]
-                    zhCodec = ["big5","gb2312","gbk"]
+                    zhCodec = ["big5","gb2312"]
                     unicodeCodex = ['utf-8','utf-8-sig',"utf-16le","utf-16be"]
 
                     if c == 'ascii':
                         lang="eng"
-                        print ">>Lang %s, because of encoding"%lang,c
+                        print (">>Lang %s, because of encoding"%lang,c)
 ##                    elif c == 'gb2312':
 ##                        lang="gb.chn"
 ##                        print ">>Lang %s, because of encoding"%lang,c
@@ -157,27 +157,27 @@ class Shooter(object):
                     elif c in zhCodec:
                         backF=zh2utf8(backF,c)
                         lang="zh"
-                        print ">>Lang %s, because of encoding"%lang,c
+                        print (">>Lang %s, because of encoding"%lang,c)
                     elif c in unicodeCodex:
                         enc,likely = lang_detect(backF)
 ##                        print c,enc,likely
                         if likely == "ascii":
                             lang="eng"
-                            print ">>Lang %s, because of encoding"%lang,c,likely
+                            print (">>Lang %s, because of encoding"%lang,c,likely)
                         # elif likely == "euc_kr":
                         #     lang="kr"
                         #     print ">>Lang %s, because of encoding"%lang,c,likely
 ##                        elif likely == "utf16":
 ##                            lang="utf16.zh"
-##                            print ">>Lang %s, because of encoding"%lang,c,likely
+##                            print (">>Lang %s, because of encoding"%lang,c,likely)
                         elif likely not in likelyKeep:
-                            print ">>Lang unknown, because of encoding",c,likely
+                            print (">>Lang unknown, because of encoding",c,likely)
                             continue
                         else:
                             lang="zh"
-                            print ">>Lang %s, because of encoding"%lang,c,likely
+                            print (">>Lang %s, because of encoding"%lang,c,likely)
                     else:
-                        print ">>Lang unknown, because of encoding",c
+                        print (">>Lang unknown, because of encoding",c)
                         continue
 
                 index = 0
@@ -193,16 +193,16 @@ class Shooter(object):
                 outFileNameList = [os.path.splitext(self.__fileName)[0], "%s%s" % (lang,("" if index == 0 else index)), str(j["Ext"])]
                 if len(i["Files"]) != 1: outFileNameList.insert(2, str(idx_i))
                 outFileName = '.'.join(outFileNameList)
-                print "   Writing:",os.path.basename(outFileName)
+                print ("   Writing:",os.path.basename(outFileName))
                 with open(outFileName, 'wb') as output: output.write(backF)
                 res = True
 
                 if i["Delay"] != 0:
                     delayFileName = '.'.join((os.path.splitext(self.__fileName)[0], "%s%s" % (lang,("" if index == 0 else index)), "delay"))
                     with open(delayFileName, 'w') as output: output.write(str(i["Delay"]))
-                    print "   Writing:",os.path.basename(delayFileName)
+                    print ("   Writing:",os.path.basename(delayFileName))
 
-##        if (res): print " Found for: %s" % os.path.basename(self.__fileName)
+##        if (res): print (" Found for: %s" % os.path.basename(self.__fileName))
         # print "Returning", res
         return res
 

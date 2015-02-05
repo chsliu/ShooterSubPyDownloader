@@ -33,7 +33,7 @@ def utf8Tozh(u,codec):
                 try:
                         return encc,u.decode(codec)[:dcnt].encode(c)
                 except UnicodeEncodeError as e:
-##                        print e
+##                        print (e)
                         if "u266a" in str(e): #ignore error by this char
                         	# print "u266a"
                         	return encc,u
@@ -96,7 +96,7 @@ def main1():
 ##        print f
         if ".srt" in f:
             text = open(os.path.join(path, f),"r").read()
-            print "["+f+"]", lang_detect(text)
+            print ("["+f+"]", lang_detect(text))
 
 
 def checkAndConvert(fullname):
@@ -107,21 +107,21 @@ def checkAndConvert(fullname):
     try:
         text = open(fullname,"r").read()
     except:
-        print ">>%s Access Error." % fullname
+        print (">>%s Access Error." % fullname)
         return
     enc,likely = lang_detect(text)
-    print f,"[",enc,likely,"]",
+    print (f,"[",enc,likely,"]"),
     if enc=="utf-8" or enc=="utf-8-sig":
-        if likely in likelyKeep: print "-> KEEP"
+        if likely in likelyKeep: print ("-> KEEP")
         else:
-            print "-> DEL"
+            print ("-> DEL")
             os.remove(fullname)
     elif enc in encConvert:
-        print "-> CONVERT"
+        print ("-> CONVERT")
         u=zh2utf8(text,enc)
         open(fullname,"w").write(u)
     else:
-        print "-> DEL"
+        print ("-> DEL")
         os.remove(fullname)
 
 
@@ -167,16 +167,16 @@ def renameExt(fullname,ext):
     for f in os.listdir(path):
         if filename_noext in f:
             if isChn(f,ext):
-                print "================================="
+                print ("=================================")
 ##                print "Renaming",zhcnt,f
 ##                rename(path,f,zhcnt)
                 newf=getNewName(f,"zh",zhcnt)
                 zhcnt = zhcnt + 1
-                print f,"->",newf
+                print (f,"->",newf)
                 try:
                     os.rename(os.path.join(path,f), os.path.join(path,newf))
                 except:
-                    print ">>Access Error."
+                    print (">>Access Error.")
 
 
 def renameSubtitles(fullname):
@@ -196,18 +196,18 @@ def renameSubtitles(fullname):
 def main():
     videoExt = [".avi",".mkv",".mp4"]
     path = sys.argv[1]
-    print "================================="
-    print "checkAndConvert"
+    print ("=================================")
+    print ("checkAndConvert")
     for root, dirs, files in os.walk(path):
         for f in files:
             fullname = os.path.join(root, f)
 ##            if isChnSrt(f):
             if isChn(f,".srt"):
-                print "================================="
+                print ("=================================")
                 checkAndConvert(fullname)
 
-    print "================================="
-    print "renameSubtitles"
+    print ("=================================")
+    print ("renameSubtitles")
     for root, dirs, files in os.walk(path):
         for f in files:
             fullname = os.path.join(root, f)

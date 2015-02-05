@@ -35,14 +35,14 @@ def subtitleClean(file, exclude_keywords):
 				if keyword in f: seleted = False
 			if os.path.basename(file) == f: seleted = False
 			if seleted:
-				print "  Deleting:",f
+				print("  Deleting:",f)
 				fullname = os.path.join(filepath,f)
 				# print "Deleting",fullname
 				# print os.path.abspath(f)
 				try:
 					os.remove(fullname)
 				except:
-					print ">>Delete failed"
+					print(">>Delete failed")
 
 
 def subtitleCleanIdxSub(file,ifhasthese,delthese):
@@ -59,12 +59,12 @@ def subtitleCleanIdxSub(file,ifhasthese,delthese):
 			if filename_noext in f:
 				for keyword in delthese:
 					if keyword in f:
-						print "  Deleting:",f
+						print ("  Deleting:",f)
 						fullname = os.path.join(filepath,f)
 						try:
 							os.remove(fullname)
 						except:
-							print ">>Delete failed"
+							print (">>Delete failed")
 
 
 def shootSub(file,nosub_list):
@@ -80,14 +80,14 @@ def ignoreAdd(file,ignorefile):
     try:
         if os.path.getmtime(file) < time()-timedelta(maxAgeDays).total_seconds():
             if ignorefile:
-                print "Ignore Add:",filename
+                print("Ignore Add:",filename)
                 open(ignorefile,"a").writelines(filename+"\n")
 ##            else:
 ##                print("ignore error:",ignorefile)
 ##        else:
 ##            print("filedate not old:",filename)
     except:
-        print ">>Ignore Add Error,",filename
+        print("filedate error:",filename)
         pass
 
 
@@ -156,7 +156,7 @@ def shooterListAll(path, ext_list, ignore_list,ignorefile):
 		        		# print f
 		        		if f in ignore_list:
 		        			print("=================================")
-		        			print "  Ignoring:", f
+		        			print("  Ignoring:", f)
 		        		else:
 		        		# if not f in ignore_list:
 		        			# print "Processing:", f
@@ -164,11 +164,11 @@ def shooterListAll(path, ext_list, ignore_list,ignorefile):
 		        			shooterFile(os.path.join(root, f),sub_ext,nosub_list,ignorefile)
 		        			continue
 
-	print "================="
-	print "File without sub:"
+	print ("=================")
+	print ("File without sub:")
 	for f in nosub_list:
 	   print f
-##	   print "      NONE:",f
+##	   print ("      NONE:",f)
 
 
 def shooterCleanAll(path, hasthis, delthis):
@@ -194,9 +194,10 @@ def usage():
 	print("Welcome to ShooterSubAll")
 	print("========================")
 	app = os.path.basename(sys.argv[0])
-	print app, "[Directory or Filename]", "[Ignored File List]", "[Video file extensions]"
-	print "Examples:", app, "xxx.mkv"
-	print "Examples:", app, "TV/", "ignore.txt", "avi mkv mp4"
+	print (app, "[Directory or Filename]", "[Ignored File List]", "[Video file extensions]")
+	print ("Examples:", app, "xxx.mkv")
+	print ("Examples:", app, "TV/", "ignore.txt", "avi mkv mp4")
+
 
 def main():
 	try:
@@ -212,7 +213,7 @@ def main():
 		file = sys.argv[2]
 		ignorefile = os.path.abspath(file)
 		ignore_list = getListFromFile(ignorefile)
-		print "Ignored %s Entries" % len(ignore_list)
+		print ("Ignored %s Entries" % len(ignore_list))
 	except:
 ##		traceback.print_exc()
 		ignore_list = []
