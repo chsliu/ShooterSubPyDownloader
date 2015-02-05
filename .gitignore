@@ -1,6 +1,6 @@
 *.pyc
 requirements.txt
 lang_detect.pyc_dis
+*.bak
 lang_detect.bat
 shootersuball.bat
-*.bak
