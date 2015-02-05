@@ -9,7 +9,7 @@ Couple of interesting features are made from magic282 original version.
 - detects whether the subtitle is in english or chinese, and change the extension name accordingly. eng for english, zh for chinese.
 - converts gb or big5 encodings to utf8 encoding while saving the file.
 - ignore.txt file is used to skip unwanted files to speed up the whole download process.
-
+- automatically overwrite or remove old subtitles if new one is downloaded. ***Use with caution***
 
 setup.bat
 ---------
