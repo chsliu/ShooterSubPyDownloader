@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2f7d5789-f2e2-4b62-b603-7af4763ee7cc}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>ShooterSubAll.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>{d9e8617d-f16c-4c85-b76f-d1f9d85aaff3}</InterpreterId>
+    <InterpreterVersion>2.7</InterpreterVersion>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <CommandLineArguments>"\\hv3\Media2\TV\Last Man Standing (2011) (2011)\Season 04\Last Man Standing (2011) - S04E13 - Mike Hires Chuck - 2015-01-16.480p.HDTV.x264-KILLERS.mp4"</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="lang_detect.py" />
+    <Compile Include="setup.py" />
+    <Compile Include="Shooter.py" />
+    <Compile Include="ShooterSubAll.py" />
+    <Compile Include="ShooterSubPyDownloader.py" />
+    <Compile Include="SVPlayerHash.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{4eaa227f-f06b-4720-b8e3-8aa30eddc530}\2.7" />
+    <InterpreterReference Include="{d9e8617d-f16c-4c85-b76f-d1f9d85aaff3}\2.7" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>

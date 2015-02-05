@@ -1,0 +1,5 @@
+*.pyc
+requirements.txt
+lang_detect.pyc_dis
+lang_detect.bat
+shootersuball.bat
