@@ -54,7 +54,7 @@ class Shooter(object):
             content = rsp.read().decode('utf-8', 'replace')
         except:
             print ">>Connection Error"
-            return false
+            return False
 
         jsonContent = ""
         try:
@@ -83,32 +83,6 @@ class Shooter(object):
                 response = urlopen(dLink)
                 backF = response.read()
 
-                # print(guessLanguage,guessLanguage(backF))
-                # print(guessLanguageTag,guessLanguageTag(backF))
-                # print(guessLanguageName,guessLanguageName(backF))
-                # print(guessLanguageId,guessLanguageId(backF))
-                # print(guessLanguageInfo,guessLanguageInfo(backF))
-                # try:
-                #     if j["Ext"]=="ass":
-                #         print "Lang chn, because of .ass extension"
-                #         lang="chn"
-                #     else:
-                #         d=chardet.detect(backF)
-                #         # print c
-                #         u=unicode(backF,d["encoding"])
-                #         # print guessLanguage(u)
-                #         print "Testing lang...",
-                #         lang=guessLanguage(u[:2000])
-                #         print "chardet:",d,"guessLanguage:",lang,
-                #         if lang in lang_wanted:
-                #             print ""
-                #         else:
-                #             print "Lang not wanted, skipped"
-                #             continue
-                # except:
-                #     lang="xxx"
-                #     print "Lang unknown, skipped"
-                #     continue
                 if j["Ext"]=="ass":
 ##                    lang="chn"
                     lang="zh"
@@ -132,33 +106,18 @@ class Shooter(object):
                     # else:
                     #     print "Skipping, because of encoding", c
                     #     continue
-                    likelyKeep = ["big5","gb2312"]
                     zhCodec = ["big5","gb2312","gbk"]
-                    unicodeCodex = ['utf-8','utf-8-sig',"utf-16le","utf-16be"]
+                    unicodeCodec = ['utf-8','utf-8-sig',"utf-16le","utf-16be"]
+                    unicodeLikelyKeep = ["big5","gb2312","gbk"]
 
                     if c == 'ascii':
                         lang="eng"
                         print ">>Lang %s, because of encoding"%lang,c
-##                    elif c == 'gb2312':
-##                        lang="gb.chn"
-##                        print ">>Lang %s, because of encoding"%lang,c
-##                    elif c == 'big5':
-##                        lang="big5.chn"
-##                        print ">>Lang %s, because of encoding"%lang,c
-##                    elif c == 'utf-16le':
-##                        lang="chn"
-##                        print ">>Lang %s, because of encoding"%lang,c
-##                    elif c == 'utf-16be':
-##                        lang="chn"
-##                        print ">>Lang %s, because of encoding"%lang,c
-##                    elif c == 'utf-8' or c == 'utf-8-sig':
-##                        lang="chn"
-##                        print ">>Lang %s, because of encoding"%lang,c
                     elif c in zhCodec:
                         backF=zh2utf8(backF,c)
                         lang="zh"
                         print ">>Lang %s, because of encoding"%lang,c
-                    elif c in unicodeCodex:
+                    elif c in unicodeCodec:
                         enc,likely = lang_detect(backF)
 ##                        print c,enc,likely
                         if likely == "ascii":
@@ -170,7 +129,7 @@ class Shooter(object):
 ##                        elif likely == "utf16":
 ##                            lang="utf16.zh"
 ##                            print ">>Lang %s, because of encoding"%lang,c,likely
-                        elif likely not in likelyKeep:
+                        elif likely not in unicodeLikelyKeep:
                             print ">>Lang unknown, because of encoding",c,likely
                             continue
                         else:
