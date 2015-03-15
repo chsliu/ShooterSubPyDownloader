@@ -18,6 +18,7 @@ import json
 import chardet
 import os
 from lang_detect import zh2utf8,lang_detect
+from utf8sc2tc import utf8_sc2tc
 
 ##lang_wanted = ["en","zh"]
 ##encoding_wanted = ['UTF-16LE','GB2312','Big5']
@@ -84,9 +85,14 @@ class Shooter(object):
                 backF = response.read()
 
                 if j["Ext"]=="ass":
-##                    lang="chn"
                     lang="zh"
-                    print ">>Lang %s, because of .%s extension" % (lang,j["Ext"])
+                    d=chardet.detect(backF[:300])
+                    if d["encoding"]:
+                        c=d["encoding"].lower()
+                        backF=utf8_sc2tc(zh2utf8(backF,c).decode("utf8"))
+                        print ">>Lang %s, because of extension .%s, %s convert to utf8-tc" % (lang,j["Ext"],c)
+                    else:
+                        print ">>Lang %s, because of extension .%s" % (lang,j["Ext"])
                 elif j["Ext"]=="idx":
                     lang=""
                     print ">>Lang none, because of .%s extension" % j["Ext"]
@@ -100,38 +106,37 @@ class Shooter(object):
                         print ">>Encoding not found"
                         continue
                     c=d["encoding"].lower()
-                    # if c in encoding_wanted:
-                    #     print "Lang chn, because of encoding",c
-                    #     lang="chn"
-                    # else:
-                    #     print "Skipping, because of encoding", c
-                    #     continue
-                    zhCodec = ["big5","gb2312","gbk"]
+
+                    big5Codec = ["big5"]
+                    gbCodec = ["gb2312","gbk"]
                     unicodeCodec = ['utf-8','utf-8-sig',"utf-16le","utf-16be"]
                     unicodeLikelyKeep = ["big5","gb2312","gbk"]
+                    unicodegb = ["gb2312","gbk"]
 
                     if c == 'ascii':
                         lang="eng"
                         print ">>Lang %s, because of encoding"%lang,c
-                    elif c in zhCodec:
+                    elif c in gbCodec:
+                        backF=utf8_sc2tc(zh2utf8(backF,c).decode("utf8"))
+                        lang="zh"
+                        print ">>Lang %s, because of encoding %s, convert to utf8-tc"%(lang,c)
+                    elif c in big5Codec:
                         backF=zh2utf8(backF,c)
                         lang="zh"
-                        print ">>Lang %s, because of encoding"%lang,c
+                        print ">>Lang %s, because of encoding %s, convert to utf8"%(lang,c)
                     elif c in unicodeCodec:
                         enc,likely = lang_detect(backF)
 ##                        print c,enc,likely
                         if likely == "ascii":
                             lang="eng"
                             print ">>Lang %s, because of encoding"%lang,c,likely
-                        # elif likely == "euc_kr":
-                        #     lang="kr"
-                        #     print ">>Lang %s, because of encoding"%lang,c,likely
-##                        elif likely == "utf16":
-##                            lang="utf16.zh"
-##                            print ">>Lang %s, because of encoding"%lang,c,likely
                         elif likely not in unicodeLikelyKeep:
                             print ">>Lang unknown, because of encoding",c,likely
                             continue
+                        elif likely in unicodegb:
+                            lang="zh"
+                            backF=utf8_sc2tc(backF.decode("utf8"))
+                            print ">>Lang %s, because of encoding %s %s, convert to utf8-tc"%(lang,c,likely)
                         else:
                             lang="zh"
                             print ">>Lang %s, because of encoding"%lang,c,likely

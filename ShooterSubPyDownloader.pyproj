@@ -30,6 +30,7 @@
     <Compile Include="ShooterSubAll.py" />
     <Compile Include="ShooterSubPyDownloader.py" />
     <Compile Include="SVPlayerHash.py" />
+    <Compile Include="utf8sc2tc.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{4eaa227f-f06b-4720-b8e3-8aa30eddc530}\2.7" />
