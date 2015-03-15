@@ -90,15 +90,15 @@ class Shooter(object):
                     if d["encoding"]:
                         c=d["encoding"].lower()
                         backF=utf8_sc2tc(zh2utf8(backF,c).decode("utf8"))
-                        print ">>Lang %s, because of extension .%s, %s convert to utf8-tc" % (lang,j["Ext"],c)
+                        print ">>Lang %s, because of extension .%s, %s convert to utf8(big5)" % (lang,j["Ext"],c)
                     else:
                         print ">>Lang %s, because of extension .%s" % (lang,j["Ext"])
                 elif j["Ext"]=="idx":
                     lang=""
-                    print ">>Lang none, because of .%s extension" % j["Ext"]
+                    print ">>Lang none, because of extension .%s" % j["Ext"]
                 elif j["Ext"]=="sub" and len(backF) > 1000000:
                     lang=""
-                    print ">>Lang none, because of .%s extension" % j["Ext"]
+                    print ">>Lang none, because of extension .%s" % j["Ext"]
                 else:
                     print ">> Testing  %s.%s" % (os.path.splitext(os.path.basename(self.__fileName))[0],str(j["Ext"]))
                     d=chardet.detect(backF[:300])
@@ -119,7 +119,7 @@ class Shooter(object):
                     elif c in gbCodec:
                         backF=utf8_sc2tc(zh2utf8(backF,c).decode("utf8"))
                         lang="zh"
-                        print ">>Lang %s, because of encoding %s, convert to utf8-tc"%(lang,c)
+                        print ">>Lang %s, because of encoding %s, convert to utf8(big5)"%(lang,c)
                     elif c in big5Codec:
                         backF=zh2utf8(backF,c)
                         lang="zh"
@@ -129,17 +129,17 @@ class Shooter(object):
 ##                        print c,enc,likely
                         if likely == "ascii":
                             lang="eng"
-                            print ">>Lang %s, because of encoding"%lang,c,likely
+                            print ">>Lang %s, because of encoding %s(%s)"%(lang,c,likely)
                         elif likely not in unicodeLikelyKeep:
-                            print ">>Lang unknown, because of encoding",c,likely
+                            print ">>Lang unknown, because of encoding %s(%s)"%(c,likely)
                             continue
                         elif likely in unicodegb:
                             lang="zh"
                             backF=utf8_sc2tc(backF.decode("utf8"))
-                            print ">>Lang %s, because of encoding %s %s, convert to utf8-tc"%(lang,c,likely)
+                            print ">>Lang %s, because of encoding %s(%s), convert to utf8(big5)"%(lang,c,likely)
                         else:
                             lang="zh"
-                            print ">>Lang %s, because of encoding"%lang,c,likely
+                            print ">>Lang %s, because of encoding %s(%s)"%(lang,c,likely)
                     else:
                         print ">>Lang unknown, because of encoding",c
                         continue
