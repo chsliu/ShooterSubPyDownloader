@@ -135,7 +135,7 @@ class Shooter(object):
                             continue
                         elif likely in unicodegb:
                             lang="zh"
-                            backF=utf8_sc2tc(backF.decode("utf8"))
+                            backF=utf8_sc2tc(backF.decode(c))
                             print ">>Lang %s, because of encoding %s(%s), convert to utf8(big5)"%(lang,c,likely)
                         else:
                             lang="zh"
