@@ -1,4 +1,6 @@
 @echo off
+REM =================================
+set path=%path%;%~dp0\..\utility
 
 REM =================================
 set MyDate=
@@ -34,11 +36,11 @@ if exist %_% call %_%
 
 REM =================================
 
-git pull																												>>%LOG1% 2>>&1
+git pull		>>%LOG1% 2>>&1
 
-git add . --all																									>>%LOG1% 2>>&1
+git add . --all	>>%LOG1% 2>>&1
 git commit -a -m "Automated commit at %var% on %COMPUTERNAME%"	>>%LOG1% 2>>&1
-git push																												>>%LOG1% 2>>&1
+git push		>>%LOG1% 2>>&1
 
 REM =================================
 
@@ -46,9 +48,14 @@ popd
 
 REM =================================
 set ALARM=
-findstr /C:"error:" %LOG1% >> %LINE%
-call :COUNTLINE %LINE%
 
+findstr /C:"error:" %LOG1% >%LINE%
+findstr /C:"fatal:" %LOG1% >>%LINE%
+findstr /C:"merge" %LOG1% >>%LINE%
+findstr /C:"Untracked files:" %LOG1% >>%LINE%
+call :COUNTLINE %LINE%
+rem echo cnt = %cnt%
+rem pause
 if %cnt% GTR 0 set ALARM=1
 
 REM =================================
