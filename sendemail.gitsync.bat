@@ -15,6 +15,10 @@ set LINE=%temp%\%~n0-line.txt
 
 REM =================================
 
+call :INTERNETCHECK
+
+REM =================================
+
 set _=%~dp0\..\taskschd\%~n0-%COMPUTERNAME%.bat
 if exist %_% call %_%
 
@@ -38,7 +42,7 @@ REM =================================
 
 git pull		>>%LOG1% 2>>&1
 
-git add . --all	>>%LOG1% 2>>&1
+git add -A	>>%LOG1% 2>>&1
 git commit -a -m "Automated commit at %var% on %COMPUTERNAME%"	>>%LOG1% 2>>&1
 git push		>>%LOG1% 2>>&1
 
@@ -88,3 +92,19 @@ REM =================================
 for /f %%a in ('type "%1"^|find "" /v /c') do set /a cnt=%%a
 
 exit /b
+
+:INTERNETCHECK
+echo checking internet connection
+ping www.google.com -n 1 -w 1000 >NUL
+REM cls
+if errorlevel 1 (
+	set internet=Not connected to internet
+	goto :EOF
+) else (
+	set internet=Connected to internet
+)
+
+echo %internet%
+
+exit /b
+
