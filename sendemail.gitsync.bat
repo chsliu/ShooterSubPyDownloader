@@ -1,6 +1,6 @@
 @echo off
 REM =================================
-set path=%path%;%~dp0\..\utility
+set path=C:\Windows\system32;%path%;%~dp0\..\utility
 
 REM =================================
 set MyDate=
