@@ -7,9 +7,13 @@ for /f "skip=1" %%x in ('wmic os get localdatetime') do if not defined MyDate se
 set TODAY=%MyDate:~0,4%-%MyDate:~4,2%-%MyDate:~6,2%
 set MONTH=%MyDate:~0,4%-%MyDate:~4,2%
 REM =================================
+set T=%1
+set T=%T::=%
+set T=%T:\\=%
+set T=%T:\=-%
 
-set LOG1=%temp%\%~n0-%TODAY%-summary.txt
-set LOG2=%temp%\%~n0-%TODAY%.txt
+set LOG1=%temp%\%~n0-%T%-%TODAY%-summary.txt
+set LOG2=%temp%\%~n0-%T%-%TODAY%.txt
 set TXT1=%temp%\%~n0.txt
 
 REM =================================
