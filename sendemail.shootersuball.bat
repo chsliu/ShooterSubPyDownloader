@@ -37,7 +37,7 @@ rem for /f %%a in ('type "%LOG1%"^|find "Found for:" /c') do set /a cnt=%%a
 if %cnt% gtr 1 (
   rem echo %LOG1% has %cnt% lines
   echo %1 sending report...
-  sendemail -s msa.hinet.net -f egreta.su@msa.hinet.net -t chsliu@gmail.com -u [FileBot] %~n0 %1 -m %0 %1 -a %LOG1% %LOG2% %TXT1%
+  sendemail -s msa.hinet.net -f egreta.su@msa.hinet.net -t chsliu@gmail.com -u [FileBot] %~n0 %1 -m %~n0 %1 -a %LOG1% %LOG2% %TXT1%
 ) else (
   rem echo %LOG1% only has %cnt% lines
   echo %1 has no report.
