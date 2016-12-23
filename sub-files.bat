@@ -1,9 +1,57 @@
-rem @echo off
+@echo off
+
+REM =================================
+goto :main
+
+REM =================================
+:EscapeAmpersands
+set tempArgs=%*
+set RET=%tempArgs:&=^&%
+
+exit /b
+
+:UnescapeAmpersands
+set tempArg1=%*
+set RET=%tempArg1:^&=&%
+
+exit /b
+
+:lastarg
+set RET=%1
+
+echo RET=%RET%
+
+shift
+if not [%1]==[] goto lastarg
+
+exit /b
+
+:StartAgain
+echo :StartAgain
+REM call :EscapeAmpersands %*
+rem echo start /MAX cmd /c %0 %RET% max
+REM pause
+start /MAX cmd /c %0 %RET% max
+
+exit /b
+
+:Exit
+pause
+goto :EOF
+
+REM =================================
+:main
+
+REM =================================
 rem setlocal EnableDelayedExpansion
 set app=%~dp0\ShooterSubAll.py
 
-rem call :EscapeAmpersands %*
+call :EscapeAmpersands %*
 call :lastarg %RET%
+
+echo RET=%RET%
+pause
+
 if not [%RET%] == ["max"] goto :StartAgain
 
 if [%1]==[] goto :EOF
@@ -18,37 +66,3 @@ python %app% %RET%
 shift
 goto :loop
 
-goto :EOF
-
-:EscapeAmpersands
-set tempArgs=%*
-set RET=%tempArgs:&=^&%
-
-goto :EOF
-
-:UnescapeAmpersands
-set tempArg1=%*
-set RET=%tempArg1:^&=&%
-
-goto :EOF
-
-
-:lastarg
-set RET=%1
-shift
-if not [%1]==[] goto lastarg
-
-goto :EOF
-
-:StartAgain
-call :EscapeAmpersands %*
-rem echo start /MAX cmd /c %0 %RET% max
-pause
-start /MAX cmd /c %0 %RET% max
-
-goto :EOF
-
-
-
-:Exit
-pause
