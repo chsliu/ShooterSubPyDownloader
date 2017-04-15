@@ -20,9 +20,13 @@ echo List of newly download subtitles:	 >$LOG1
 grep -F ".zh" $LOG2						>>$LOG1
 
 #=================================
-NUMOFLINES=$(wc -l < $LOG1)
+# cat $LOG2
+# cat $LOG1
+
+#=================================
 cp $0 $TXT1
 
+NUMOFLINES=$(wc -l < $LOG1)
 if [ "$NUMOFLINES" -gt "1" ]; then
 	echo $1 sending report...
 	echo "$(basename $0) $1" | mailx -s "[FileBot] $(basename $0) $1" -a $LOG1 -a $LOG2 -a $TXT1 chsliu@gmail.com
